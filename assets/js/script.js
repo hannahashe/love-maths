@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   for (let button of buttons) {
     button.addEventListener("click", function () {
       if (this.getAttribute("data-type") === "submit") {
-        alert("You clicked Submit!");
+        checkAnswer();
       } else {
         let gameType = this.getAttribute("data-type");
         runGame(gameType);
@@ -35,7 +35,26 @@ function runGame(gameType) {
   }
 }
 
-function checkAnswer() {}
+/*
+ * Checks the answer against the first element
+ * returned from calculateCorrectAnswer() array
+ */
+
+function checkAnswer() {
+  let userAnswer = parseInt(document.getElementById("answer-box").value);
+  let calculatedAnswer = calculateCorrectAnswer();
+  let isCorrect = userAnswer === calculatedAnswer[0];
+
+  if (isCorrect) {
+    alert("Hey! You got it right! :D");
+  } else {
+    alert(
+      `Awwww... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`
+    );
+  }
+  runGame(calculatedAnswer[1]);
+}
+
 /**
  * Gets the operands (numbers) and the operator (plus, minus etc)
  * directly from the DOM and returns the correct answer.
